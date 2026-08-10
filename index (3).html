@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2Z Store | A සිට Z දක්වා ඕනම දෙයක්</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241934;
+    --ink-soft:#4A3F5C;
+    --ink-2:#332450;
+    --paper:#FBF3E7;
+    --paper-2:#F3E8D8;
+    --mango:#F2A93B;
+    --guava:#E85D75;
+    --teal:#1C8C74;
+    --line: rgba(36,25,52,0.14);
+    --line-soft: rgba(251,243,231,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.5;
+  }
+  h1,h2,h3,.display{ font-family:'Fraunces', serif; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  button{font:inherit; cursor:pointer;}
+
+  /* ---- Ribbon marquee ---- */
+  .marquee-wrap{
+    background:var(--mango);
+    color:var(--ink);
+    overflow:hidden;
+    white-space:nowrap;
+    padding:7px 0;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:1.5px;
+    border-bottom:2px dashed rgba(36,25,52,0.35);
+  }
+  .marquee{ display:inline-block; padding-left:100%; animation: scroll 24s linear infinite; }
+  @keyframes scroll{ 0%{transform:translateX(0);} 100%{transform:translateX(-100%);} }
+
+  /* ---- Header ---- */
+  header{ position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); }
+  .nav-inner{ max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:16px 24px; gap:16px; flex-wrap:wrap; }
+  .logo{ font-size:25px; font-weight:700; display:flex; align-items:baseline; gap:2px; }
+  .logo span.z{ color:var(--guava); }
+  .cats-nav{ display:flex; gap:6px; flex-wrap:wrap; }
+  .cats-nav button{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; font-weight:600;
+    padding:8px 14px 8px 12px; border-radius:3px 12px 3px 12px;
+    border:1.5px solid var(--ink); background:var(--paper); color:var(--ink);
+    transition:.15s; position:relative;
+  }
+  .cats-nav button:hover{ background:var(--paper-2); }
+  .cats-nav button.active{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .nav-cta{
+    display:flex; align-items:center; gap:8px;
+    background:var(--teal); color:white;
+    padding:9px 16px; border-radius:3px 12px 3px 12px;
+    font-weight:700; font-size:13.5px; white-space:nowrap;
+  }
+  .nav-cta:hover{ filter:brightness(1.08); }
+
+  /* ---- Hero ---- */
+  .hero{ max-width:1180px; margin:0 auto; padding:56px 24px 20px; }
+  .hero-top{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:40px; align-items:center; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600;
+    letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:14px; display:block;
+  }
+  .hero h1{ font-size:44px; line-height:1.14; font-weight:600; margin-bottom:18px; }
+  .hero h1 .accent{ color:var(--guava); font-style:italic; }
+  .hero p{ font-size:16px; color:var(--ink-soft); max-width:440px; margin-bottom:26px; }
+  .hero-btns{ display:flex; gap:12px; flex-wrap:wrap; }
+  .btn-primary{
+    background:var(--ink); color:var(--paper); padding:14px 24px;
+    border-radius:3px 14px 3px 14px; font-weight:700; font-size:14.5px; display:inline-block;
+  }
+  .btn-primary:hover{ background:var(--ink-2); }
+  .btn-outline{
+    border:1.5px solid var(--ink); color:var(--ink); padding:14px 24px;
+    border-radius:3px 14px 3px 14px; font-weight:700; font-size:14.5px;
+  }
+  .hero-visual{
+    background:var(--ink); border-radius:16px; aspect-ratio:1/0.85;
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; overflow:hidden; position:relative;
+  }
+  .hero-visual .tile{ display:flex; align-items:center; justify-content:center; font-size:32px; }
+  .hero-visual .tile:nth-child(1){ background:var(--mango); }
+  .hero-visual .tile:nth-child(2){ background:var(--teal); color:white; }
+  .hero-visual .tile:nth-child(3){ background:var(--guava); color:white; }
+  .hero-visual .tile:nth-child(4){ background:var(--ink-2); color:white; }
+  .hero-visual .tile:nth-child(5){ background:var(--paper); }
+  .hero-visual .tile:nth-child(6){ background:#D8C9AE; }
+
+  /* ---- A-Z alphabet index (signature element) ---- */
+  .az-strip{
+    margin-top:40px; padding:18px 20px; background:var(--ink); border-radius:14px;
+    display:flex; align-items:center; gap:4px; overflow-x:auto;
+  }
+  .az-label{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--paper);
+    opacity:.55; margin-right:10px; white-space:nowrap; flex-shrink:0;
+  }
+  .az-letter{
+    width:26px; height:26px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; font-weight:600;
+    color:rgba(251,243,231,0.28); border-radius:4px;
+  }
+  .az-letter.active{
+    color:var(--ink); background:var(--mango); cursor:pointer; transition:.15s;
+  }
+  .az-letter.active:hover{ background:var(--guava); color:white; transform:translateY(-2px); }
+
+  /* ---- Section ---- */
+  .section{ max-width:1180px; margin:0 auto; padding:56px 24px 60px; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:8px; }
+  .section-head h2{ font-size:26px; font-weight:600; }
+  .section-head .count{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-soft); }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:22px; }
+
+  /* Price-tag shaped card (signature) */
+  .card{
+    background:var(--paper); border:1.5px solid var(--ink); border-radius:4px;
+    overflow:visible; display:flex; flex-direction:column; position:relative;
+    transition:.2s; margin-top:4px;
+  }
+  .card:hover{ transform:translateY(-4px); box-shadow:5px 6px 0 var(--ink); }
+  .card::before{
+    content:""; position:absolute; top:-4px; left:18px; width:14px; height:14px;
+    background:var(--paper); border:1.5px solid var(--ink); border-radius:50%; z-index:2;
+  }
+  .card::after{
+    content:""; position:absolute; top:1.5px; left:23px; width:5px; height:5px;
+    background:var(--ink); border-radius:50%; z-index:2;
+  }
+  .card-img{ aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; font-size:42px; position:relative; border-bottom:1.5px dashed var(--ink); background:var(--paper-2); }
+  .card-tag{
+    position:absolute; top:10px; right:10px; background:var(--ink); color:var(--paper);
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; letter-spacing:.3px;
+    padding:4px 9px; border-radius:999px;
+  }
+  .card-body{ padding:16px 14px 16px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .card-body h3{ font-size:15px; font-weight:600; font-family:'Inter',sans-serif; }
+  .card-body .desc{ font-size:12.5px; color:var(--ink-soft); flex:1; }
+  .card-body .price{ font-family:'IBM Plex Mono', monospace; font-size:17px; font-weight:700; color:var(--guava); }
+  .order-btn{
+    margin-top:8px; background:var(--teal); color:white; text-align:center; padding:10px 0;
+    border-radius:3px 10px 3px 10px; font-size:13px; font-weight:700; display:flex;
+    align-items:center; justify-content:center; gap:6px;
+  }
+  .order-btn:hover{ filter:brightness(1.08); }
+  .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; font-size:13.5px; }
+
+  /* ---- Contact / Footer ---- */
+  .contact{ background:var(--ink); color:var(--paper); padding:64px 24px; }
+  .contact-inner{ max-width:1180px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .contact h2{ font-size:28px; margin-bottom:12px; font-weight:600; }
+  .contact p{ color:rgba(251,243,231,0.7); font-size:15px; max-width:400px; }
+  .contact-links{ display:flex; flex-direction:column; gap:12px; margin-top:22px; }
+  .contact-links a{
+    display:flex; align-items:center; gap:12px; font-weight:600; font-size:14.5px;
+    padding:12px 16px; background:rgba(251,243,231,0.06); border-radius:3px 12px 3px 12px;
+    border:1px solid var(--line-soft);
+  }
+  .contact-links a:hover{ background:rgba(251,243,231,0.12); }
+  .icon-circle{ width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+  footer{ text-align:center; padding:20px; font-size:12px; font-family:'IBM Plex Mono', monospace; color:rgba(251,243,231,0.5); background:var(--ink); border-top:1px solid var(--line-soft); }
+
+  .float-wa{
+    position:fixed; bottom:22px; right:22px; z-index:60; background:var(--teal); color:white;
+    width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:25px; box-shadow:0 8px 20px rgba(0,0,0,0.25); animation:pulse 2.4s infinite;
+  }
+  @keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(28,140,116,0.5);} 70%{box-shadow:0 0 0 12px rgba(28,140,116,0);} 100%{box-shadow:0 0 0 0 rgba(28,140,116,0);} }
+
+  @media(max-width:860px){
+    .hero-top{ grid-template-columns:1fr; }
+    .hero h1{ font-size:32px; }
+    .contact-inner{ grid-template-columns:1fr; }
+    .nav-cta span{ display:none; }
+  }
+  @media (prefers-reduced-motion: reduce){ .marquee, .float-wa{ animation:none; } }
+  :focus-visible{ outline:2.5px solid var(--guava); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<div class="marquee-wrap"><span class="marquee" id="marqueeText">Loading…</span></div>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo" id="logoText">A2<span class="z">Z</span> Store</div>
+    <nav class="cats-nav" id="catsNav"></nav>
+    <a class="nav-cta" id="headerWaBtn" href="#" target="_blank">💬 <span>WhatsApp Order</span></a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-top">
+    <div>
+      <span class="eyebrow">Reseller Online Shop</span>
+      <h1 id="heroTitle">A සිට Z දක්වා <span class="accent">ඕනම දෙයක්</span></h1>
+      <p id="heroSubtitle">Loading…</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn-primary">Products බලන්න</a>
+        <a href="#contact" class="btn-outline">Contact Us</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="tile">👗</div><div class="tile">📱</div><div class="tile">💄</div>
+      <div class="tile">🏠</div><div class="tile">🧸</div><div class="tile">🛍️</div>
+    </div>
+  </div>
+  <div class="az-strip" id="azStrip">
+    <span class="az-label">A → Z</span>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="section-head">
+    <h2>Our Products</h2>
+    <span class="count" id="resultCount"></span>
+  </div>
+  <div class="grid" id="productGrid"></div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <h2>අපිව Contact කරන්න</h2>
+      <p>ඕනම product එකක් ගැන විස්තර දැනගන්න, Order එකක් දාන්න, හෝ price එකක් අහන්න — පහළින් තියෙන ඕනම channel එකකින් අපිව හම්බෙන්න.</p>
+    </div>
+    <div class="contact-links" id="contactLinks"></div>
+  </div>
+</section>
+
+<footer id="footerText">© 2026 A2Z Store — Reseller Online Shop.</footer>
+
+<a class="float-wa" id="floatWaBtn" href="#" target="_blank">💬</a>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDcgMM0GzYsSFiiT0BKZXGmVkw0BA3-xaA",
+  authDomain: "a2zonlinestore-1acce.firebaseapp.com",
+  databaseURL: "https://a2zonlinestore-1acce-default-rtdb.firebaseio.com/",
+  projectId: "a2zonlinestore-1acce",
+  storageBucket: "a2zonlinestore-1acce.firebasestorage.app",
+  messagingSenderId: "437015505623",
+  appId: "1:437015505623:web:df57fd3b24b17188c1de92",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let settings = {};
+let categories = {};
+let products = {};
+let activeCat = "all";
+
+function waLink(number, productName){
+  const msg = productName
+    ? `Hi! මට "${productName}" එක ගැන විස්තර ඕන.`
+    : `Hi! මට A2Z Store එකෙන් Order එකක් දාන්න ඕන.`;
+  return `https://wa.me/${number || ""}?text=${encodeURIComponent(msg)}`;
+}
+
+function catList(){
+  const arr = Object.entries(categories).map(([id,c])=>({id, ...c}));
+  arr.sort((a,b)=>(a.order??0)-(b.order??0));
+  return [{id:"all", label:"සියල්ල", emoji:"", letter:""}, ...arr];
+}
+
+function renderSettings(){
+  document.getElementById("marqueeText").textContent = settings.marquee || "A2Z STORE — A සිට Z දක්වා ඕනම දෙයක්";
+  document.getElementById("heroSubtitle").textContent = settings.tagline || "Quality items, fair price, ඉක්මන් delivery.";
+  document.getElementById("footerText").textContent = `© 2026 ${settings.storeName || "A2Z Store"} — Reseller Online Shop.`;
+  const wa = waLink(settings.whatsapp);
+  document.getElementById("headerWaBtn").href = wa;
+  document.getElementById("floatWaBtn").href = wa;
+
+  const links = document.getElementById("contactLinks");
+  links.innerHTML = "";
+  if(settings.phone){
+    links.innerHTML += `<a href="tel:${settings.phone.replace(/\s/g,'')}"><span class="icon-circle" style="background:var(--mango);">📞</span> ${settings.phone}</a>`;
+  }
+  if(settings.whatsapp){
+    links.innerHTML += `<a href="${wa}" target="_blank"><span class="icon-circle" style="background:var(--teal);">💬</span> WhatsApp - ${settings.phone || settings.whatsapp}</a>`;
+  }
+  if(settings.facebook){
+    links.innerHTML += `<a href="${settings.facebook}" target="_blank"><span class="icon-circle" style="background:#1877F2;">f</span> ${settings.facebook.replace(/^https?:\/\//,'')}</a>`;
+  }
+  if(settings.instagram){
+    links.innerHTML += `<a href="${settings.instagram}" target="_blank"><span class="icon-circle" style="background:var(--guava);">📷</span> ${settings.instagram.replace(/^https?:\/\//,'')}</a>`;
+  }
+}
+
+function renderNav(){
+  const cats = catList();
+  const nav = document.getElementById("catsNav");
+  nav.innerHTML = "";
+  cats.forEach(c=>{
+    const btn = document.createElement("button");
+    btn.textContent = c.id === "all" ? c.label : `${c.emoji||""} ${c.label}`.trim();
+    if(c.id === activeCat) btn.classList.add("active");
+    btn.onclick = ()=>{ activeCat = c.id; renderNav(); renderProducts(); document.getElementById("products").scrollIntoView({behavior:"smooth"}); };
+    nav.appendChild(btn);
+  });
+
+  const az = document.getElementById("azStrip");
+  az.innerHTML = '<span class="az-label">A → Z</span>';
+  const lettered = new Set(cats.filter(c=>c.letter).map(c=>c.letter.toUpperCase()));
+  for(let i=65;i<=90;i++){
+    const L = String.fromCharCode(i);
+    const span = document.createElement("span");
+    span.className = "az-letter" + (lettered.has(L) ? " active" : "");
+    span.textContent = L;
+    if(lettered.has(L)){
+      const cat = cats.find(c=>c.letter && c.letter.toUpperCase()===L);
+      span.onclick = ()=>{ activeCat = cat.id; renderNav(); renderProducts(); document.getElementById("products").scrollIntoView({behavior:"smooth"}); };
+      span.title = cat.label;
+    }
+    az.appendChild(span);
+  }
+}
+
+const tileColors = ["var(--mango)","var(--teal)","var(--guava)","var(--ink-2)","var(--paper-2)","#D8C9AE"];
+
+function renderProducts(){
+  const grid = document.getElementById("productGrid");
+  grid.innerHTML = "";
+  let list = Object.entries(products).map(([id,p])=>({id, ...p}));
+  list.sort((a,b)=>(a.order??0)-(b.order??0));
+  if(activeCat !== "all") list = list.filter(p=>p.category===activeCat);
+
+  document.getElementById("resultCount").textContent = list.length + " items";
+
+  if(list.length === 0){
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">මේ category එකේ items තවම නෑ. පස්සේ එන්න!</div>`;
+    return;
+  }
+
+  list.forEach((p,i)=>{
+    const cat = categories[p.category] || {};
+    const isUrl = p.image && p.image.startsWith("http");
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="card-img" style="background:${isUrl ? 'var(--paper-2)' : tileColors[i % tileColors.length]};">
+        ${cat.label ? `<span class="card-tag">${cat.label}</span>` : ""}
+        ${isUrl ? `<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;">` : `<span>${p.image || "🛍️"}</span>`}
+      </div>
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <div class="desc">${p.desc || ""}</div>
+        <div class="price">${p.price}</div>
+        <a class="order-btn" href="${waLink(settings.whatsapp, p.name)}" target="_blank">💬 Order Now</a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+onValue(ref(db, "settings"), (snap)=>{ settings = snap.val() || {}; renderSettings(); renderNav(); renderProducts(); });
+onValue(ref(db, "categories"), (snap)=>{ categories = snap.val() || {}; renderNav(); renderProducts(); });
+onValue(ref(db, "products"), (snap)=>{ products = snap.val() || {}; renderProducts(); });
+</script>
+
+</body>
+</html>
